@@ -1,0 +1,62 @@
+pip install python-lxml -> yum install python-lxml 로 할것
+
+python weather_test.py 파이선 파일 실행
+
+pip install python-lxml
+# yum install python-devel
+
+# 실패시 다시 lxml 설치
+pip install python-lxml
+
+vim weather_test.py
+
+#!/usr/bin/python
+# -*- coding: utf-8 -*- 
+
+import urllib2 # extensible library for opening URLs
+import time
+
+from lxml.html import parse, fromstring # processing XML and HTML
+
+# 인천 남구 용현동 기상상황 확인 url
+url = 'http://www.kma.go.kr/wid/queryDFSRSS.jsp?zone=2823759100'
+temp=[]
+
+def temp_process(xml):
+    for  elt in xml.getiterator("temp"):    # getting temp tag 
+        temp_val = elt.text
+        print temp_val
+
+def time_print():
+    now_unix = time.time()  # unix time
+    now = time.localtime()  # local time
+
+    now_year = now.tm_year  # year
+    now_mon = now.tm_mon    # month
+    now_day = now.tm_mday   # day
+    now_hour = now.tm_hour  # hour 
+    now_min = now.tm_min    # min
+    now_sec = now.tm_sec    # sec
+
+    print "======================="
+    print now_unix  # unix time print
+    print now
+    print "======================="
+    print now_year, now_mon, now_day, now_hour, now_min, now_sec    # time parsing
+    print "======================="
+
+if __name__ == '__main__':
+
+    # time print function
+    time_print()
+
+    page = urllib2.urlopen(url).read()
+
+    # fromstring : Parses an XML document or fragment from a string. 
+    # Returns the root node (or the result returned by a parser target).
+    xml_raw = fromstring(page)
+
+    # processing temperature
+    temp_process(xml_raw
+    
+    파이선 코드 간단히 주석 달아볼것
